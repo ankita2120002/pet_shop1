@@ -1,19 +1,29 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Service
 metadata:
-  name: my-app
+  name: my-service
 spec:
-  replicas: 2
   selector:
-    matchLabels:
-      app: my-app
-  template:
-    metadata:
-      labels:
-        app: my-app
-    spec:
-      containers:
-      - name: my-app-container
-        image: lakshman386/pet:${BUILD_NUMBER}
-        ports:
-        - containerPort: 8080
+    app: my-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30001  # Correctly specified for a NodePort service
+  type: NodePort  # Must specify type NodePort to use nodePort
+  
+  ---
+  
+  apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+  labels:  # Correct spelling of 'labels'
+    app: my-app
+spec:
+  containers:
+    - name: my-container
+      image: nginx
+      ports:
+        - containerPort: 80  # Correct field name: containerPort
+      

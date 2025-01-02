@@ -5,17 +5,17 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: k8s
-  replicas: 2 # Number of replicas that will be created for this deployment
+      app: my-app
+  replicas: 3 # Number of replicas that will be created for this deployment
   template:
     metadata:
       labels:
-        app: k8s
+        app: my-app
     spec:
       containers:
-        - name: k8s
-          image: lakshman386/pet:${BUILD_NUMBER} # Image that will be used to containers in the cluster
-          imagePullPolicy: IfNotPresent
+        - name: my-app
+          image: lakshman386/pet:latest # Image that will be used to containers in the cluster
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080 # The port that the container is running on in the cluster
 
@@ -25,10 +25,10 @@ spec:
 apiVersion: v1 # Kubernetes API version
 kind: Service # Kubernetes resource kind we are creating
 metadata: # Metadata of the resource kind we are creating
-  name: k8ssvc
+  name: my-app-service
 spec:
   selector:
-    app: k8s
+    app: my-app
   ports:
     - protocol: "TCP"
       port: 8080 # The port that the service is running on in the cluster

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: my-app
-          image: lakshman386/pet_shop:28
+          image: lakshman386/pet_shop:1
           imagePullPolicy: Always
           ports:
             - containerPort: 8080 # The port that the container is running on in the cluster
